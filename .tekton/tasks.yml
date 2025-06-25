@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: lint-task
+spec:
+  description: >-
+    Lint task to check code style using ESLint.
+  steps:
+    - name: run-lint
+      image: node:18
+      workingDir: /workspace/source
+      script: |
+        #!/bin/sh
+        echo "Installing dependencies..."
+        npm install
+        echo "Running linter..."
+        npx eslint . || echo "Lint warnings found"
